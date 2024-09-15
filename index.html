@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Palabras para Sara</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> <!-- Fuente legible -->
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('https://files.oaiusercontent.com/file-dgsy7FMruHUbG43z4oaLTxpj?se=2024-09-15T13%3A38%3A52Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D67304abe-3a5d-43bc-880c-f24fb9f2132a.webp&sig=GJGt2VtKj8%2B41R2YDXi5i%2BfC0lWqGhpb3TJv7nWE3Ko%3D') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Roboto', sans-serif;
+      overflow: hidden;
+      color: white;
+      text-align: center;
+      position: relative;
+    }
+
+    #container {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Estilo para el mensaje "TOCALA" */
+    #tocala {
+      font-size: 2em;
+      font-weight: bold;
+      color: white;
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: fadeOut 1s forwards;
+      animation-delay: 5s;
+    }
+
+    .moon {
+      width: 250px;
+      height: 250px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/e/e1/FullMoon2010.jpg') no-repeat center center;
+      background-size: cover;
+      border-radius: 50%;
+      box-shadow: 0 0 60px 30px rgba(255, 255, 0, 0.7);
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: float 5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes fadeOut {
+      100% {
+        opacity: 0;
+      }
+    }
+
+    #messageContainer {
+      background-color: white;
+      padding: 20px;
+      border-radius: 15px;
+      width: 400px; 
+      color: black;
+      position: absolute;
+      top: 10%;
+      right: 10%;
+      text-align: justify;
+      font-size: 1.2em;
+      line-height: 1.6em;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); 
+      border: 2px solid rgba(255, 105, 180, 0.7); 
+      display: none;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    #specialMessage {
+      display: none;
+      font-size: 4em;
+      font-family: 'Bangers', cursive; 
+      font-weight: bold;
+      color: white;
+      position: absolute;
+      top: 20%; 
+      right: 10%; 
+      transform: translate(-50%, -50%);
+      text-align: center;
+      text-shadow: 4px 4px 10px rgba(255, 105, 180, 0.8), 2px 2px 0px black;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      animation: fadeIn 1.5s ease-in-out forwards;
+    }
+
+    /* Estilos especiales para el último mensaje */
+    #finalMessage {
+      background-color: white;
+      padding: 25px;
+      border-radius: 20px;
+      width: 600px;
+      height: auto;
+      color: black;
+      position: absolute;
+      right: 100px;
+      top: 1px;
+      transform: translateX(-220%);
+      text-align: justify;
+      font-size: 1.4em;
+      line-height: 1.8em;
+      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5); 
+      border: 3px solid rgba(255, 20, 147, 0.9); 
+      font-family: 'Roboto', sans-serif; 
+      display: none;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+  </style>
+</head>
+<body>
+  <div id="container">
+    <!-- Mensaje "TOCALA" -->
+    <div id="tocala">TOCALA</div>
+
+    <!-- Luna -->
+    <div class="moon" id="moon"></div>
+    <div id="messageContainer" contenteditable="true">Este es el primer mensaje especial. ¡Te amo mucho!</div>
+    <div id="specialMessage">💕</div>
+    <div id="finalMessage" contenteditable="true">Quiero decirte que estoy encantado contigo, por cómo me tratas, por cómo me hablas...</div>
+  </div>
+
+  <!-- Video de fondo con música de YouTube -->
+  <iframe width="0" height="0" src="https://www.youtube.com/embed/eAO7CEcCD3s?autoplay=1&loop=1&playlist=eAO7CEcCD3s" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+  <script>
+    const moon = document.getElementById('moon');
+    const tocala = document.getElementById('tocala');
+    const messageContainer = document.getElementById('messageContainer');
+    const specialMessage = document.getElementById('specialMessage');
+    const finalMessage = document.getElementById('finalMessage');
+    let messageIndex = 0;
+    let specialMessageShown = false;
+    let longMessageShown = false;
+    let benedettiMessageShown = false;
+
+    const messages = [
+      "Este es el primer mensaje que quiero darte. TE QUIERO UN MONTON",
+      "Desde que me escribiste de nuevo, solo me has hecho sentir emoción y felicidad. 💖",
+      "Te quiero más que a las estrellas y la Luna 🌙💖",
+      "Gracias por demostrarme en repetidas ocasiones lo tanto que me quieres. ✨",
+      "Tu personalidad es algo que me atrae mucho, eres tan gentil, empática y única.. 💕",
+      "Voy a quererte hasta que lo dejes de hacer tú, y te prometo que no quiero que ocurra.",
+      "Esta Luna es dedicada a ti nada más, a tus 16 años, a tu compañía conmigo 💖"
+    ];
+
+    const benedettiMessage = `
+      "En el amor no hay posturas ridículas ni cursis ni obscenas. 
+      En el no amor todo es ridículo y cursi y obsceno. 
+      También la norma, también la tradición." - Mario Benedetti
+    `;
+
+    const finalMessageText = `
+      Quiero decirte que estoy encantado contigo, por cómo me tratas, por cómo me hablas, 
+      por cómo me miras, por cómo me tocas. Soy consciente del amor que me tienes y no puedo 
+      dejar de pensar en corresponderte ese sentimiento tan sincero. Lograste envolverme, 
+      has hecho tanto por mí que solo de pensarlo me hace quererte aún más. Puedes enseñarme 
+      hasta lo más recóndito de tu ser, y yo con delicadeza lo recibiré y lo abrazaré. No te 
+      haría daño nunca, jamás, no sería capaz. Quiero demostrarte que te quiero cuidar y que 
+      en mí más que en nadie puedes confiar.
+    `;
+
+    moon.addEventListener('click', function() {
+      tocala.style.display = 'none'; // Desaparecer el mensaje "TOCALA"
+
+      // Si el mensaje largo ya ha sido mostrado, no hacer nada
+      if (longMessageShown) {
+        return;
+      }
+
+      // Mostrar la frase de Benedetti después del mensaje especial
+      if (specialMessageShown && !benedettiMessageShown) {
+        specialMessage.style.display = 'none'; // Ocultar el mensaje especial
+        messageContainer.textContent = benedettiMessage; // Mostrar la frase de Benedetti
+        messageContainer.style.display = 'block';
+        benedettiMessageShown = true;
+        return;
+      }
+
+      // Mostrar el mensaje largo final después de la frase de Benedetti
+      if (benedettiMessageShown && !longMessageShown) {
+        // Cambiar la posición de la luna a un lugar aleatorio antes del último mensaje
+        const randomX = Math.random() * 80 + 10;  // Genera una posición entre 10% y 90% para evitar los bordes
+        const randomY = Math.random() * 50 + 10;  // Genera una posición entre 10% y 60%
+        moon.style.top = randomY + '%';
+        moon.style.left = randomX + '%';
+
+        messageContainer.style.display = 'none'; // Ocultar los mensajes anteriores
+        finalMessage.textContent = finalMessageText; // Establecer el texto del último mensaje
+        finalMessage.style.display = 'block'; // Mostrar el mensaje largo final
+        longMessageShown = true; // Marcar que se ha mostrado el mensaje largo final
+        
+        // Iniciar la lluvia de corazones infinitos
+        setInterval(createFallingHeart, 300);
+
+        return;
+      }
+
+      // Mostrar el siguiente mensaje en el array si no se ha llegado al final
+      if (messageIndex < messages.length) {
+        messageContainer.textContent = messages[messageIndex];
+        messageContainer.style.display = 'block';
+        messageIndex++;
+      } else if (messageIndex === messages.length) {
+        // Mostrar el mensaje especial "Sara, me haces feliz"
+        specialMessage.style.display = 'block';
+        messageContainer.style.display = 'none'; // Ocultar el mensaje normal
+        specialMessageShown = true; // Marcar que se mostró el mensaje especial
+      }
+    });
+
+    // Función para crear corazones que caen infinitamente
+    function createFallingHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';  // Generar corazones en posiciones aleatorias en el ancho de la pantalla
+      heart.style.top = '-50px';  // Comenzar fuera de la pantalla
+      heart.style.animation = `fall ${Math.random() * 3 + 2}s linear infinite`;  // Duración y velocidad aleatoria
+      document.body.appendChild(heart);
+
+      // Eliminar el corazón después de que termina la animación para evitar saturar la página
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+
+  </script>
+</body>
+</html>
